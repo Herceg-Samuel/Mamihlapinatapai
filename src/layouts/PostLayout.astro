@@ -1,0 +1,51 @@
+---
+import Navbar from '../components/ui/Navbar.astro';
+import Footer from '../components/ui/Footer.astro';
+import '../styles/global.css';
+
+import type { CollectionEntry } from 'astro:content';
+
+type EssaysFrontmatter = CollectionEntry<'essays'>['data'];
+type ProjectsFrontmatter = CollectionEntry<'projects'>['data'];
+
+type PostFrontmatter = EssaysFrontmatter | ProjectsFrontmatter;
+
+const { frontmatter } = Astro.props as { frontmatter: PostFrontmatter };
+
+// (Keep this helper available for future conditional rendering)
+---
+
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{frontmatter.title} | Mamihlapinatapai</title>
+  </head>
+  <body class="bg-[#fafafa] text-gray-900 antialiased selection:bg-yellow-200">
+    <Navbar />
+    
+    <!-- The prose classes handle all the markdown typography automatically -->
+    <main class="max-w-3xl mx-auto px-6 py-16 prose prose-lg prose-gray md:prose-xl">
+      <!-- Article Header -->
+      <header class="not-prose mb-12">
+        <div class="flex items-center gap-3 text-sm text-gray-500 mb-4 font-mono">
+          <span>{frontmatter.date.toISOString().split('T')[0]}</span>
+          <span>—</span>
+          <span class="uppercase tracking-widest text-red-500">{frontmatter.topic}</span>
+        </div>
+        <h1 class="text-4xl md:text-5xl font-black tracking-tight text-gray-900 leading-tight">
+          {frontmatter.title}
+        </h1>
+        <p class="text-xl text-gray-500 mt-4 italic">
+          {frontmatter.description}
+        </p>
+      </header>
+
+      <!-- The MDX content gets injected here -->
+      <slot />
+    </main>
+
+    <Footer />
+  </body>
+</html>
