@@ -1,0 +1,17 @@
+---
+// src/components/ui/Footer.astro
+const currentYear = new Date().getFullYear();
+---
+<footer class="max-w-3xl mx-auto px-6 py-12 mt-20 border-t border-black/5">
+  <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 text-sm text-gray-500">
+    <div class="flex flex-col gap-1">
+      <p class="font-medium text-gray-900">© {currentYear} Mamihlapinatapai.</p>
+      </div>
+    
+    <div class="text-left md:text-right">
+      <p class="italic text-gray-400 font-serif hover:text-red-500 transition-colors">
+        Error 404: Meaning not found.
+      </p>
+    </div>
+  </div>
+</footer>
