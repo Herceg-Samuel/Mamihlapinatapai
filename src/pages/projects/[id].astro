@@ -1,0 +1,33 @@
+---
+// src/pages/projects/[id].astro
+import { getCollection, render } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import PostLayout from '../../layouts/PostLayout.astro';
+
+// Build all project pages
+export async function getStaticPaths() {
+  const projectEntries = await getCollection('projects');
+
+  return projectEntries.map((entry: CollectionEntry<'projects'>) => ({
+    params: { id: entry.id },
+    props: { entry },
+  }));
+}
+
+interface Props {
+  entry: CollectionEntry<'projects'>;
+}
+
+const { entry } = Astro.props;
+
+if (!entry) {
+  return Astro.redirect('/404');
+}
+
+const { Content } = await render(entry);
+---
+
+<PostLayout frontmatter={entry.data}>
+  <Content />
+</PostLayout>
+

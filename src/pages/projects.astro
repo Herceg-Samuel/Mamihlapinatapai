@@ -1,0 +1,47 @@
+---
+// src/pages/projects.astro
+import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+
+import Navbar from '../components/ui/Navbar.astro';
+import Footer from '../components/ui/Footer.astro';
+import '../styles/global.css';
+
+const projects: CollectionEntry<'projects'>[] = await getCollection('projects', (entry) => {
+  return entry.data.draft !== true;
+});
+
+const sortedProjects = projects.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Projects | Mamihlapinatapai</title>
+  </head>
+  <body class="bg-[#fafafa] text-gray-900 antialiased selection:bg-yellow-200">
+    <Navbar />
+    
+    <main class="max-w-3xl mx-auto px-6 py-12">
+      <h1 class="text-4xl font-black mb-8">Build Logs</h1>
+      <div class="flex flex-col gap-8">
+        {sortedProjects.map((project) => (
+          <a href={`/projects/${project.id}`} class="group block border-b border-gray-200 pb-8 last:border-0">
+            <h2 class="text-2xl font-bold group-hover:text-blue-600 transition-colors">{project.data.title}</h2>
+            <p class="text-gray-600 mt-2 mb-3">{project.data.description}</p>
+            <div class="flex gap-2">
+              {project.data.techStack.map((tech: string) => (
+                <span class="text-[10px] uppercase tracking-wider font-bold bg-gray-100 text-gray-500 px-2 py-1 rounded-sm">
+                  {tech}
+                </span>
+              ))}
+            </div>
+          </a>
+        ))}
+      </div>
+    </main>
+
+    <Footer />
+  </body>
+</html>

@@ -1,0 +1,39 @@
+---
+// src/pages/essays/[...slug].astro
+import { getCollection, render } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import PostLayout from '../../layouts/PostLayout.astro';
+
+// 1. Fetch all essays and tell Astro what URLs to build
+export async function getStaticPaths() {
+  const essayEntries = await getCollection('essays');
+  
+  // Explicitly typing the map parameter ensures the returned props are strictly typed
+  return essayEntries.map((entry: CollectionEntry<'essays'>) => ({
+    params: { id: entry.id }, 
+    props: { entry },
+  }));
+}
+
+// 2. Strongly type Astro.props based on the specific collection
+interface Props {
+  entry: CollectionEntry<'essays'>;
+}
+
+// 3. Grab the specific entry
+const { entry } = Astro.props;
+
+// 4. Safety check: Prevent build/render crashes if data is missing
+if (!entry) {
+  // If somehow reached without an entry, throw a 404
+  return Astro.redirect('/404');
+}
+
+// 5. Render the MDX into HTML
+const { Content } = await render(entry);
+---
+
+<!-- 6. Pass the strictly-typed frontmatter data to the layout -->
+<PostLayout frontmatter={entry.data}>
+  <Content />
+</PostLayout>

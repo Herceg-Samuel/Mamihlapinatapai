@@ -1,17 +1,112 @@
 ---
+// src/pages/index.astro
+import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
 
+import Navbar from '../components/ui/Navbar.astro';
+import Hero from '../components/ui/Hero.astro';
+import Footer from '../components/ui/Footer.astro';
+import '../styles/global.css';
+
+// 1. Fetch collections and strictly type the filter callback parameters
+const essays: CollectionEntry<'essays'>[] = await getCollection('essays', (entry: CollectionEntry<'essays'>) => {
+  return entry.data.draft !== true;
+});
+
+const projects: CollectionEntry<'projects'>[] = await getCollection('projects', (entry: CollectionEntry<'projects'>) => {
+  return entry.data.draft !== true;
+});
+
+// 2. Combine and sort. TypeScript now guarantees this array is strictly:
+// (CollectionEntry<'essays'> | CollectionEntry<'projects'>)[]
+const feed = [...essays, ...projects].sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+
+function formatDate(date: Date) {
+  return date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+}
 ---
 
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Mamihlapinatapai | 2% Battery Notes</title>
+  </head>
+  <body class="bg-[#fafafa] text-gray-900 antialiased selection:bg-yellow-200">
+    <Navbar />
+    
+    <main>
+      <Hero />
+
+      <!-- The Feed -->
+      <section class="max-w-3xl mx-auto px-6 py-12">
+        <h2 class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-8 border-b border-gray-200 pb-4">
+          Recent Thoughts & Builds
+        </h2>
+        
+        <div class="flex flex-col gap-12">
+          {feed.map((item) => (
+            <article class="group relative">
+              
+              {/* === ESSAY RENDER LOGIC === */}
+              {item.collection === 'essays' && (
+                <a href={`/essays/${item.id}`} class="block">
+                  <div class="flex items-center gap-3 text-xs font-mono text-gray-400 mb-2">
+                    <time datetime={item.data.date.toISOString()}>
+                      {formatDate(item.data.date)}
+                    </time>
+                    <span>—</span>
+                    <span class="text-red-500 uppercase tracking-widest">{item.data.topic}</span>
+                  </div>
+                  <h3 class="text-2xl font-bold mb-2 group-hover:text-blue-600 transition-colors">
+                    {item.data.title}
+                  </h3>
+                  <p class="text-gray-600 leading-relaxed">
+                    {item.data.description}
+                  </p>
+                </a>
+              )}
+
+              {/* === PROJECT RENDER LOGIC === */}
+              {item.collection === 'projects' && (
+                <a href={`/projects/${item.id}`} class="block">
+                  <div class="flex items-center gap-3 text-xs font-mono text-gray-400 mb-2">
+                    <time datetime={item.data.date.toISOString()}>
+                      {formatDate(item.data.date)}
+                    </time>
+                    <span>—</span>
+                    <span class="text-blue-500 uppercase tracking-widest">BUILD LOG</span>
+                  </div>
+                  <h3 class="text-2xl font-bold mb-2 group-hover:text-blue-600 transition-colors">
+                    {item.data.title}
+                  </h3>
+                  <p class="text-gray-600 leading-relaxed mb-4">
+                    {item.data.description}
+                  </p>
+                  
+                  {/* Map through the tech stack strictly enforced by Zod */}
+                  <ul class="flex flex-wrap gap-2">
+                    {item.data.techStack.map((tech: string) => (
+                      <li class="text-[10px] uppercase tracking-wider font-bold bg-gray-100 text-gray-500 px-2 py-1 rounded-sm">
+                        {tech}
+                      </li>
+                    ))}
+                  </ul>
+                </a>
+              )}
+
+            </article>
+          ))}
+        </div>
+      </section>
+    </main>
+
+    <Footer />
+  </body>
 </html>
