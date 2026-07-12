@@ -1,0 +1,26 @@
+---
+interface Props {
+  serif?: boolean;
+  mono?: boolean;
+  muted?: boolean;
+}
+
+const {
+  serif = false,
+  mono = false,
+  muted = false
+} = Astro.props;
+---
+
+<div
+  class:list={[
+    "narrative-text",
+    {
+      serif,
+      mono,
+      muted
+    }
+  ]}
+>
+  <slot />
+</div>

@@ -1,0 +1,23 @@
+---
+interface Props{
+variant?:"dots"|"moon"|"line";
+}
+
+const{
+variant="dots"
+}=Astro.props;
+---
+
+<div class={`pause ${variant}`}>
+
+{
+variant==="dots"
+&&"• • •"
+}
+
+{
+variant==="moon"
+&&"☽"
+}
+
+</div>

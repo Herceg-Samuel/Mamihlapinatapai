@@ -1,0 +1,19 @@
+---
+interface Props{
+direction?:
+"left"|
+"right";
+}
+
+const{
+direction="left"
+}=Astro.props;
+---
+
+<span>
+
+{direction==="left"
+?"←"
+:"→"}
+
+</span>

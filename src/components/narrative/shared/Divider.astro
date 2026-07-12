@@ -1,0 +1,14 @@
+---
+interface Props{
+variant?:"line"|"dots";
+}
+
+const{
+variant="line"
+}=Astro.props;
+---
+
+<hr class:list={[
+"divider",
+variant
+]} />
