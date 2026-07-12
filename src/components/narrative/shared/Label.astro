@@ -1,0 +1,16 @@
+---
+interface Props{
+small?:boolean;
+}
+
+const{
+small=false
+}=Astro.props;
+---
+
+<span class:list={[
+"label",
+{small}
+]}>
+<slot/>
+</span>

@@ -1,0 +1,32 @@
+---
+import Bubble from "../shared/Bubble.astro";
+
+interface Props {
+    from: string;
+    align?: "left" | "right";
+}
+
+const {
+    from,
+    align = "left"
+} = Astro.props;
+---
+
+<div class:list={[
+    "message",
+    align
+]}>
+
+    <div class="speaker">
+
+        {from}
+
+    </div>
+
+    <Bubble>
+
+        <slot />
+
+    </Bubble>
+
+</div>

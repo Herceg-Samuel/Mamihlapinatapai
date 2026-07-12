@@ -1,0 +1,36 @@
+---
+interface Props {
+  text: string;
+  stagger?: number;
+}
+
+const {
+  text,
+  stagger = 120
+} = Astro.props;
+
+const words = text.trim().split(/\s+/);
+---
+
+<span class="word-reveal">
+
+{
+words.map((word,index)=>
+
+<span
+
+class="word"
+
+style={`--delay:${index*stagger}ms`}
+
+>
+
+{word}&nbsp;
+
+</span>
+
+)
+
+}
+
+</span>
