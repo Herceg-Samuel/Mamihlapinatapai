@@ -1,0 +1,16 @@
+---
+import NarrativeBlock from "./shared/NarrativeBlock.astro";
+import Bubble from "./shared/Bubble.astro";
+
+interface Props{
+    style?:"bubble"|"editorial";
+}
+
+const{
+    style="editorial"
+}=Astro.props;
+---
+
+<NarrativeBlock class={`quote ${style}`}>
+    <slot/>
+</NarrativeBlock>

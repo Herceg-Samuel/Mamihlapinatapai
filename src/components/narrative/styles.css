@@ -1,0 +1,459 @@
+.narrative {
+  margin-block: 3rem;
+
+  max-width: 100%;
+
+  position: relative;
+}
+
+.narrative-block {
+  margin-block: var(--space-7);
+  position: relative;
+  width: 100%;
+}
+
+.narrative-text {
+  line-height: 1.8;
+}
+
+.serif {
+  font-family: var(--font-serif);
+  font-style: italic;
+}
+
+.mono {
+  font-family: var(--font-mono);
+}
+
+.muted {
+  color: var(--text-soft);
+}
+
+.bubble {
+  padding: 1rem 1.4rem;
+
+  border-radius: 24px;
+
+  border: 1px solid var(--line);
+
+  background: var(--surface);
+
+  display: inline-block;
+  max-width: min(100%, 42rem);
+}
+.paper {
+  padding: 1.5rem;
+
+  background: var(--surface);
+
+  border: 1px solid var(--line);
+
+  border-radius: 6px;
+
+  position: relative;
+
+  overflow: hidden;
+}
+
+.paper::before {
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  opacity: 0.03;
+
+  pointer-events: none;
+
+  background-image: radial-gradient(circle, #000 0.4px, transparent 0.5px);
+
+  background-size: 18px 18px;
+}
+.quote {
+  border-left: 2px solid var(--accent);
+
+  padding-left: 1.5rem;
+}
+
+.speaker {
+  font-size: 0.85rem;
+
+  color: var(--text-soft);
+
+  margin-bottom: 0.75rem;
+}
+
+.date {
+  font-family: var(--font-mono);
+
+  font-size: 0.8rem;
+
+  color: var(--text-muted);
+}
+
+.aside {
+  font-size: 0.95rem;
+
+  color: var(--text-soft);
+
+  border-left: 1px dashed var(--line);
+
+  padding-left: 1rem;
+
+  font-style: italic;
+}
+
+.divider {
+  border: none;
+
+  margin: 2rem 0;
+}
+
+.line {
+  border-top: 1px solid var(--line);
+}
+
+.dots {
+  height: 1px;
+
+  background: repeating-linear-gradient(
+    90deg,
+    transparent,
+    transparent 4px,
+    var(--line) 4px,
+    var(--line) 6px
+  );
+}
+
+.label {
+  font-weight: 600;
+
+  letter-spacing: 0.08em;
+
+  text-transform: uppercase;
+
+  font-size: 0.8rem;
+
+  color: var(--text-soft);
+}
+
+.small {
+  font-size: 0.7rem;
+}
+
+.meta {
+  display: flex;
+
+  gap: 0.75rem;
+
+  flex-wrap: wrap;
+
+  font-family: var(--font-mono);
+
+  font-size: 0.8rem;
+
+  color: var(--text-muted);
+}
+
+.marker {
+  display: inline-block;
+
+  margin-bottom: 0.5rem;
+
+  font-size: 0.8rem;
+
+  font-weight: 600;
+
+  letter-spacing: 0.08em;
+
+  text-transform: uppercase;
+
+  color: var(--accent);
+}
+
+.checkbox {
+  width: 18px;
+
+  height: 18px;
+
+  border: 1px solid var(--line);
+
+  display: grid;
+
+  place-items: center;
+
+  font-size: 0.8rem;
+}
+
+.fade {
+  opacity: 0;
+
+  transform: translateY(0.5rem);
+
+  transition:
+    opacity 0.7s var(--ease),
+    transform 0.7s var(--ease);
+
+  transition-delay: var(--delay);
+}
+
+.fade.visible {
+  opacity: 1;
+
+  transform: none;
+}
+
+.word {
+  opacity: 0;
+
+  filter: blur(4px);
+
+  transform: translateY(6px);
+
+  animation: wordReveal 700ms var(--ease) forwards;
+
+  animation-delay: var(--delay);
+}
+
+@keyframes wordReveal {
+  to {
+    opacity: 1;
+
+    filter: none;
+
+    transform: none;
+  }
+}
+
+.conversation {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.message {
+  display: flex;
+  flex-direction: column;
+  max-width: 42rem;
+}
+
+.message.right {
+  margin-inline-start: auto;
+  text-align: right;
+}
+
+.message.right .bubble {
+  margin-inline-start: auto;
+}
+
+.conversation-pause {
+  color: var(--text-muted);
+  text-align: center;
+  letter-spacing: 0.3em;
+}
+
+.memory-header {
+  margin-bottom: 0.25rem;
+
+  font-family: var(--font-mono);
+
+  font-size: 0.8rem;
+
+  color: var(--text-muted);
+
+  letter-spacing: 0.06em;
+
+  text-transform: uppercase;
+}
+
+.memory-caption {
+  margin-bottom: 1rem;
+
+  color: var(--text-soft);
+
+  font-style: italic;
+}
+
+.memory-photo {
+  display: block;
+
+  width: 100%;
+
+  margin-bottom: 1rem;
+
+  border-radius: 4px;
+}
+
+.annotation {
+  position: relative;
+}
+
+.margin-note {
+  margin-top: 0.75rem;
+
+  padding-inline-start: 1rem;
+
+  border-inline-start: 1px solid var(--line);
+
+  color: var(--text-soft);
+
+  font-size: 0.9rem;
+
+  font-style: italic;
+}
+
+.timeline {
+  display: grid;
+  gap: var(--space-5);
+
+  border-inline-start: 1px solid var(--line);
+
+  padding-inline-start: 1.5rem;
+}
+
+.timeline-item {
+  position: relative;
+}
+
+.timeline-item::before {
+  content: "";
+
+  position: absolute;
+
+  left: calc(-1.5rem - 0.3rem);
+
+  top: 0.45rem;
+
+  width: 0.55rem;
+
+  aspect-ratio: 1;
+
+  border-radius: 50%;
+
+  background: var(--accent);
+}
+
+.foreign {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.pronunciation {
+  color: var(--text-muted);
+
+  font-family: var(--font-mono);
+
+  font-size: 0.85rem;
+}
+
+.meaning {
+  font-style: italic;
+}
+
+.dictionary-pronunciation {
+  margin-block: 0.5rem 1rem;
+
+  color: var(--text-muted);
+
+  font-family: var(--font-mono);
+}
+
+.definition-example {
+  margin-top: 1rem;
+
+  padding-inline-start: 1rem;
+
+  border-inline-start: 2px solid var(--line);
+
+  color: var(--text-soft);
+
+  font-style: italic;
+}
+
+.notebook-title {
+  margin-bottom: 1rem;
+
+  font-family: var(--font-mono);
+
+  font-size: 0.8rem;
+
+  letter-spacing: 0.08em;
+
+  text-transform: uppercase;
+}
+
+.notebook-item {
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 0.75rem;
+}
+
+.notebook-item + .notebook-item {
+  margin-top: 0.75rem;
+}
+
+.pause {
+  margin-block: var(--space-6);
+
+  text-align: center;
+
+  color: var(--text-muted);
+
+  letter-spacing: 0.4em;
+}
+
+.pause.moon {
+  letter-spacing: normal;
+
+  font-size: 1.2rem;
+}
+
+.emphasis {
+  position: relative;
+
+  font-weight: 500;
+}
+
+.emphasis.underline {
+  text-decoration: underline;
+
+  text-decoration-color: var(--accent);
+
+  text-underline-offset: 0.18em;
+}
+
+.emphasis.highlight {
+  background: linear-gradient(transparent 60%, rgba(141, 167, 231, 0.25) 0);
+}
+
+.arrow {
+  display: inline-block;
+
+  color: var(--accent);
+
+  margin-inline-end: 0.35rem;
+}
+
+.checkbox.checked {
+  background: var(--accent);
+
+  color: white;
+
+  border-color: var(--accent);
+}
+
+@media (max-width: 640px) {
+  .bubble {
+    max-width: 100%;
+  }
+
+  .timeline {
+    padding-inline-start: 1rem;
+  }
+
+  .timeline-item::before {
+    left: calc(-1rem - 0.3rem);
+  }
+}
