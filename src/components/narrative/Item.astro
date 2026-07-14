@@ -1,0 +1,23 @@
+---
+import Checkbox from "./shared/Checkbox.astro";
+
+interface Props{
+checked?:boolean;
+}
+
+const{
+checked=false
+}=Astro.props;
+---
+
+<div class="notebook-item">
+
+<Checkbox checked={checked}/>
+
+<div>
+
+<slot/>
+
+</div>
+
+</div>

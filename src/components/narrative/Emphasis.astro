@@ -1,0 +1,18 @@
+---
+interface Props{
+variant?:"underline"|"highlight"|"circle";
+}
+
+const{
+variant="underline"
+}=Astro.props;
+---
+
+<span class:list={[
+"emphasis",
+variant
+]}>
+
+<slot/>
+
+</span>
