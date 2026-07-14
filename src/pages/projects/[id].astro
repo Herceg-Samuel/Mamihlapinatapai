@@ -4,6 +4,37 @@ import { getCollection, render } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 import PostLayout from '../../layouts/PostLayout.astro';
 
+import '@/components/narrative/styles.css';
+import '@/styles/global.css';
+
+import Annotation from '@/components/narrative/Annotation.astro';
+import Arrow from '@/components/narrative/Arrow.astro';
+import Aside from '@/components/narrative/Aside.astro';
+import Caption from '@/components/narrative/Caption.astro';
+import Conversation from '@/components/narrative/Conversation.astro';
+import DateComponent from '@/components/narrative/Date.astro'; // Renamed to avoid JS global naming collision
+import Definition from '@/components/narrative/Definition.astro';
+import Emphasis from '@/components/narrative/Emphasis.astro';
+import Foreign from '@/components/narrative/Foreign.astro';
+import Header from '@/components/narrative/Header.astro';
+import Item from '@/components/narrative/Item.astro';
+import Margin from '@/components/narrative/Margin.astro';
+import Marker from '@/components/narrative/Marker.astro';
+import Meaning from '@/components/narrative/Meaning.astro';
+import Memory from '@/components/narrative/Memory.astro';
+import Message from '@/components/narrative/Message.astro';
+import Notebook from '@/components/narrative/Notebook.astro';
+import Photo from '@/components/narrative/Photo.astro';
+import Pronunciation from '@/components/narrative/Pronunciation.astro';
+import Quote from '@/components/narrative/Quote.astro';
+import Reveal from '@/components/narrative/Reveal.astro';
+import Speaker from '@/components/narrative/Speaker.astro';
+import Thought from '@/components/narrative/Thought.astro'; // Added missing .astro extension
+import Timeline from '@/components/narrative/Timeline.astro';
+import Title from '@/components/narrative/Title.astro';
+import Pause from '@/components/narrative/shared/Pause.astro';
+
+
 // Build all project pages
 export async function getStaticPaths() {
   const projectEntries = await getCollection('projects');
@@ -24,10 +55,39 @@ if (!entry) {
   return Astro.redirect('/404');
 }
 
+const narrativeComponents = {
+  Thought, 
+  Conversation,
+  Message,
+  Pause,
+   Annotation,
+  Arrow,
+  Aside,
+  Caption,
+  Date: DateComponent,
+  Definition,
+  Emphasis,
+  Foreign,
+  Header,
+  Margin,
+  Marker,
+  Meaning,
+  Memory,
+  Notebook,
+  Photo,
+  Pronunciation,
+  Quote,
+  Reveal,
+  Speaker,
+  Timeline,
+  Title,
+  Item
+};
+
 const { Content } = await render(entry);
 ---
 
 <PostLayout frontmatter={entry.data}>
-  <Content />
+  <Content components={narrativeComponents}/>
 </PostLayout>
 

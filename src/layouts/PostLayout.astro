@@ -2,6 +2,7 @@
 import Navbar from '../components/ui/Navbar.astro';
 import Footer from '../components/ui/Footer.astro';
 import '../styles/global.css';
+import '../components/narrative/styles.css'
 
 import type { CollectionEntry } from 'astro:content';
 
@@ -22,7 +23,7 @@ const { frontmatter } = Astro.props as { frontmatter: PostFrontmatter };
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{frontmatter.title} | Mamihlapinatapai</title>
   </head>
-  <body class="bg-[#fafafa] text-gray-900 antialiased selection:bg-yellow-200">
+  <body class="text-gray-900 antialiased min-h-screen selection:bg-yellow-200">
     <Navbar />
     
     <!-- The prose classes handle all the markdown typography automatically -->
@@ -32,7 +33,7 @@ const { frontmatter } = Astro.props as { frontmatter: PostFrontmatter };
         <div class="flex items-center gap-3 text-sm text-gray-500 mb-4 font-mono">
           <span>{frontmatter.date.toISOString().split('T')[0]}</span>
           <span>—</span>
-          <span class="uppercase tracking-widest text-red-500">{frontmatter.topic}</span>
+          <span class="uppercase tracking-widest text-red-500">{frontmatter.title}</span>
         </div>
         <h1 class="text-4xl md:text-5xl font-black tracking-tight text-gray-900 leading-tight">
           {frontmatter.title}

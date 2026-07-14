@@ -1,7 +1,7 @@
 // src/content.config.ts
 import { z } from "astro/zod";
 import { defineCollection } from "astro:content";
-import { glob } from "astro/loaders"; // <-- NEW: Import the glob loader
+import { glob } from "astro/loaders";
 
 const essaysCollection = defineCollection({
   // NEW: Tell Astro exactly where to find the files
@@ -11,7 +11,15 @@ const essaysCollection = defineCollection({
     description: z
       .string()
       .max(250, "Keep the description brief for the index feed."),
-    topic: z.enum(["psychology", "philosophy", "cs", "random"]),
+    topic: z.enum([
+      "psychology",
+      "philosophy",
+      "cs",
+      "random",
+      "bts",
+      "build",
+      "thoughts",
+    ]),
     date: z.date(),
     draft: z.boolean().default(false),
   }),
@@ -20,8 +28,8 @@ const essaysCollection = defineCollection({
 const projectsCollection = defineCollection({
   loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/projects" }),
   schema: z.object({
-    title: z.string(),
-    description: z.string(),
+    title: z.string().max(100, "Title under 100"),
+    description: z.string().max(250, "Short description"),
     techStack: z.array(z.string()),
     githubUrl: z.string().url().optional(),
     liveUrl: z.string().url().optional(),

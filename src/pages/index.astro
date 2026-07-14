@@ -7,8 +7,8 @@ import Navbar from '../components/ui/Navbar.astro';
 import Hero from '../components/ui/Hero.astro';
 import Footer from '../components/ui/Footer.astro';
 import '../styles/global.css';
+import '../components/narrative/styles.css';
 
-// 1. Fetch collections and strictly type the filter callback parameters
 const essays: CollectionEntry<'essays'>[] = await getCollection('essays', (entry: CollectionEntry<'essays'>) => {
   return entry.data.draft !== true;
 });
@@ -17,8 +17,6 @@ const projects: CollectionEntry<'projects'>[] = await getCollection('projects', 
   return entry.data.draft !== true;
 });
 
-// 2. Combine and sort. TypeScript now guarantees this array is strictly:
-// (CollectionEntry<'essays'> | CollectionEntry<'projects'>)[]
 const feed = [...essays, ...projects].sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
 );
@@ -38,7 +36,7 @@ function formatDate(date: Date) {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Mamihlapinatapai | 2% Battery Notes</title>
   </head>
-  <body class="bg-[#fafafa] text-gray-900 antialiased selection:bg-yellow-200">
+  <body class="bg-primary text-gray-900 max-w-screen min-h-screen antialiased selection:bg-yellow-200">
     <Navbar />
     
     <main>
