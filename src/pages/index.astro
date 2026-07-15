@@ -9,6 +9,8 @@ import Footer from '../components/ui/Footer.astro';
 import '../styles/global.css';
 import '../components/narrative/styles.css';
 
+import Analytics from '@vercel/analytics/astro';
+
 const essays: CollectionEntry<'essays'>[] = await getCollection('essays', (entry: CollectionEntry<'essays'>) => {
   return entry.data.draft !== true;
 });
@@ -35,6 +37,7 @@ function formatDate(date: Date) {
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Mamihlapinatapai | 2% Battery Notes</title>
+    <Analytics />
   </head>
   <body class="bg-primary text-gray-900 max-w-screen min-h-screen antialiased selection:bg-yellow-200">
     <Navbar />
