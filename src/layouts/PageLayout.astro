@@ -1,0 +1,25 @@
+---
+import Navbar from '@/components/ui/Navbar.astro'
+import Footer from '@/components/ui/Footer.astro'
+
+import '../styles/global.css'
+const { title, name } = Astro.props
+---
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{title} | Mamihlapinatapai</title>
+  </head>
+  <body class="bg-primary text-gray-900 antialiased selection:bg-yellow-200">
+    <Navbar />
+     <main class="max-w-3xl mx-auto px-6 py-22">
+      <h1 class="text-4xl font-mono mb-8">{name}</h1>
+      <div class="flex flex-col gap-8">
+        <slot />
+      </div>
+    </main>
+    
+    <Footer />
+  </body>
+</html>
