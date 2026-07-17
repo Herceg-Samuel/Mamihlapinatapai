@@ -3,38 +3,30 @@
 import { getCollection } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 
-import Navbar from '../components/ui/Navbar.astro';
-import Footer from '../components/ui/Footer.astro';
 import '../styles/global.css';
+import PageLayout from '@/layouts/PageLayout.astro';
+
+import {formatDate} from '../lib/fns'
 
 const essays: CollectionEntry<'essays'>[] = await getCollection('essays', (entry) => {
   return entry.data.draft !== true;
 });
 
-const sortedEssays = essays.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const sortedEssays = essays.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf()); 
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <title>Essays | Mamihlapinatapai</title>
-  </head>
-  <body class="bg-primary text-gray-900 antialiased selection:bg-yellow-200">
-    <Navbar />
-    
-    <main class="max-w-3xl mx-auto px-6 py-12">
-      <h1 class="text-4xl font-mono mb-8">All Essays</h1>
-      <div class="flex flex-col gap-8">
+<PageLayout title="Essays" name="All Essays">
         {sortedEssays.map((essay) => (
           <a href={`/essays/${essay.id}`} class="group block border-b border-gray-200 pb-8 last:border-0">
+              <div class="flex items-center gap-3 text-xs font-mono text-gray-400 mb-2">
+                    <time datetime={essay.data.date.toISOString()}>
+                      {formatDate(essay.data.date)}
+                    </time>
+                    <span>—</span>
+                    <span class="text-red-500 uppercase tracking-widest">{essay.data.topic}</span>
+                  </div>
             <h2 class="text-2xl font-mono group-hover:text-blue-600 transition-colors">{essay.data.title}</h2>
             <p class="text-gray-600 mt-2">{essay.data.description}</p>
           </a>
         ))}
-      </div>
-    </main>
-
-    <Footer />
-  </body>
-</html>
+</PageLayout>

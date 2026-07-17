@@ -9,6 +9,8 @@ import Footer from '../components/ui/Footer.astro';
 import '../styles/global.css';
 import '../components/narrative/styles.css';
 
+import {formatDate} from '../lib/fns'
+
 import Analytics from '@vercel/analytics/astro';
 
 const essays: CollectionEntry<'essays'>[] = await getCollection('essays', (entry: CollectionEntry<'essays'>) => {
@@ -22,14 +24,6 @@ const projects: CollectionEntry<'projects'>[] = await getCollection('projects', 
 const feed = [...essays, ...projects].sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
 );
-
-function formatDate(date: Date) {
-  return date.toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  });
-}
 ---
 
 <html lang="en">

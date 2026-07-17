@@ -12,8 +12,6 @@ type ProjectsFrontmatter = CollectionEntry<'projects'>['data'];
 type PostFrontmatter = EssaysFrontmatter | ProjectsFrontmatter;
 
 const { frontmatter } = Astro.props as { frontmatter: PostFrontmatter };
-
-// (Keep this helper available for future conditional rendering)
 ---
 
 
@@ -29,7 +27,7 @@ const { frontmatter } = Astro.props as { frontmatter: PostFrontmatter };
     <!-- The prose classes handle all the markdown typography automatically -->
     <main class="max-w-3xl mx-auto px-6 py-16 prose prose-lg prose-gray md:prose-xl">
       <!-- Article Header -->
-      <header class="not-prose mb-12">
+      <header class="not-prose mb-12 py-12">
         <div class="flex items-center gap-3 text-sm text-gray-500 mb-4 font-mono">
           <span>{frontmatter.date.toISOString().split('T')[0]}</span>
           <span>—</span>

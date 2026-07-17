@@ -3,9 +3,10 @@
 import { getCollection } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 
-import Navbar from '../components/ui/Navbar.astro';
-import Footer from '../components/ui/Footer.astro';
 import '../styles/global.css';
+import PageLayout from '@/layouts/PageLayout.astro';
+
+import {formatDate} from '../lib/fns'
 
 const projects: CollectionEntry<'projects'>[] = await getCollection('projects', (entry) => {
   return entry.data.draft !== true;
@@ -13,21 +14,16 @@ const projects: CollectionEntry<'projects'>[] = await getCollection('projects', 
 
 const sortedProjects = projects.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 ---
-
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <title>Projects | Mamihlapinatapai</title>
-  </head>
-  <body class="text-gray-900 antialiased selection:bg-yellow-200">
-    <Navbar />
-    
-    <main class="max-w-3xl mx-auto px-6 py-12">
-      <h1 class="text-4xl font-mono mb-8">Build Logs</h1>
-      <div class="flex flex-col gap-8">
+<PageLayout title="Projects" name="Build Logs">
         {sortedProjects.map((project) => (
           <a href={`/projects/${project.id}`} class="group block border-b border-gray-200 pb-8 last:border-0">
+             <div class="flex items-center gap-3 text-xs font-mono text-gray-400 mb-2">
+                    <time datetime={project.data.date.toISOString()}>
+                      {formatDate(project.data.date)}
+                    </time>
+                    <span>—</span>
+                    <span class="text-blue-500 uppercase tracking-widest">BUILD LOG</span>
+                  </div>
             <h2 class="text-2xl font-mono group-hover:text-blue-600 transition-colors">{project.data.title}</h2>
             <p class="text-gray-600 mt-2 mb-3">{project.data.description}</p>
             <div class="flex gap-2">
@@ -39,9 +35,4 @@ const sortedProjects = projects.sort((a, b) => b.data.date.valueOf() - a.data.da
             </div>
           </a>
         ))}
-      </div>
-    </main>
-
-    <Footer />
-  </body>
-</html>
+</PageLayout>
