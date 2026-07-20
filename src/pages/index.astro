@@ -8,6 +8,7 @@ import Hero from '../components/ui/Hero.astro';
 import Footer from '../components/ui/Footer.astro';
 import '../styles/global.css';
 import '../components/narrative/styles.css';
+// import BackToTopButton from '../components/ui/back-to-top'
 
 import {formatDate} from '../lib/fns'
 
@@ -21,7 +22,11 @@ const projects: CollectionEntry<'projects'>[] = await getCollection('projects', 
   return entry.data.draft !== true;
 });
 
-const feed = [...essays, ...projects].sort(
+const notes: CollectionEntry<'notes'>[] = await getCollection('notes', (entry: CollectionEntry<'notes'>) => {
+  return entry.data.draft !== true;
+});
+
+const feed = [...essays, ...projects, ...notes].sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
 );
 ---
@@ -30,7 +35,7 @@ const feed = [...essays, ...projects].sort(
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Mamihlapinatapai | 2% Battery Notes</title>
+    <title>Mamihlapinatapai | Lost in Translation</title>
     <Analytics />
   </head>
   <body class="bg-primary text-gray-900 max-w-screen min-h-screen antialiased selection:bg-yellow-200">
@@ -57,7 +62,7 @@ const feed = [...essays, ...projects].sort(
                       {formatDate(item.data.date)}
                     </time>
                     <span>—</span>
-                    <span class="text-red-500 uppercase tracking-widest">{item.data.topic}</span>
+                    <span class="text-orange-500 uppercase tracking-widest">{item.data.topic}</span>
                   </div>
                   <h3 class="text-3xl md:text-4xl xl:text-5xl xl:mb-4 font-mono mb-2 group-hover:text-blue-600 transition-colors">
                     {item.data.title}
@@ -96,11 +101,31 @@ const feed = [...essays, ...projects].sort(
                 </a>
               )}
 
+               {/* === NOTE RENDER LOGIC === */}
+              {item.collection === 'notes' && (
+                <a href={`/notes/${item.id}`} class="block">
+                  <div class="flex items-center gap-3 text-xs font-mono text-gray-400 mb-2">
+                    <time datetime={item.data.date.toISOString()}>
+                      {formatDate(item.data.date)}
+                    </time>
+                    <span>—</span>
+                    <span class="text-green-500 uppercase tracking-widest">{item.data.topic}</span>
+                  </div>
+                  <h3 class="text-3xl md:text-4xl xl:text-5xl xl:mb-4 font-mono mb-2 group-hover:text-blue-600 transition-colors">
+                    {item.data.title}
+                  </h3>
+                  <p class="text-gray-600 leading-relaxed">
+                    {item.data.description}
+                  </p>
+                </a>
+              )}
+
             </article>
           ))}
         </div>
       </section>
     </main>
+    <!-- <BackToTopButton /> -->
 
     <Footer />
   </body>
