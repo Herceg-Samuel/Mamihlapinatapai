@@ -19,6 +19,7 @@ const essaysCollection = defineCollection({
       "bts",
       "build",
       "thoughts",
+      "heart",
     ]),
     date: z.date(),
     draft: z.boolean().default(false),
@@ -38,7 +39,28 @@ const projectsCollection = defineCollection({
   }),
 });
 
+const notesCollection = defineCollection({
+  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/notes" }),
+  schema: z.object({
+    title: z.string().max(100, "Title under 100"),
+    description: z.string().max(250, "Short description"),
+    topic: z.enum([
+      "psychology",
+      "philosophy",
+      "cs",
+      "random",
+      "bts",
+      "build",
+      "thoughts",
+      "heart",
+    ]),
+    date: z.date(),
+    draft: z.boolean().default(false),
+  }),
+});
+
 export const collections = {
   essays: essaysCollection,
   projects: projectsCollection,
+  notes: notesCollection,
 };

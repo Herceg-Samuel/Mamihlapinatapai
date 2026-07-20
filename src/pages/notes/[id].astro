@@ -1,5 +1,5 @@
 ---
-// src/pages/essays/[...slug].astro
+// src/pages/notes/[...slug].astro
 import { getCollection, render } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 import PostLayout from '../../layouts/PostLayout.astro';
@@ -7,13 +7,12 @@ import PostLayout from '../../layouts/PostLayout.astro';
 import '@/components/narrative/styles.css';
 import '@/styles/global.css';
 
-// Import all the narrative blocks from your components folder
 import Annotation from '@/components/narrative/Annotation.astro';
 import Arrow from '@/components/narrative/Arrow.astro';
 import Aside from '@/components/narrative/Aside.astro';
 import Caption from '@/components/narrative/Caption.astro';
 import Conversation from '@/components/narrative/Conversation.astro';
-import DateComponent from '@/components/narrative/Date.astro'; // Renamed to avoid JS global naming collision
+import DateComponent from '@/components/narrative/Date.astro'; 
 import Definition from '@/components/narrative/Definition.astro';
 import Emphasis from '@/components/narrative/Emphasis.astro';
 import Foreign from '@/components/narrative/Foreign.astro';
@@ -36,12 +35,12 @@ import Title from '@/components/narrative/Title.astro';
 import Pause from '@/components/narrative/shared/Pause.astro';
 
 
-// 1. Fetch all essays and tell Astro what URLs to build
+// 1. Fetch all notes and tell Astro what URLs to build
 export async function getStaticPaths() {
-  const essayEntries = await getCollection('essays');
+  const noteEntries = await getCollection('notes');
   
   // Explicitly typing the map parameter ensures the returned props are strictly typed
-  return essayEntries.map((entry: CollectionEntry<'essays'>) => ({
+  return noteEntries.map((entry: CollectionEntry<'notes'>) => ({
     params: { id: entry.id }, 
     props: { entry },
   }));
@@ -49,7 +48,7 @@ export async function getStaticPaths() {
 
 // 2. Strongly type Astro.props based on the specific collection
 interface Props {
-  entry: CollectionEntry<'essays'>;
+  entry: CollectionEntry<'notes'>;
 }
 
 // 3. Grab the specific entry
