@@ -18,7 +18,7 @@ const sortedEssays = essays.sort((a, b) => b.data.date.valueOf() - a.data.date.v
 <PageLayout title="Essays" name="All Essays">
         {sortedEssays.map((essay) => (
           <a href={`/essays/${essay.id}`} class="group block border-b border-gray-200 pb-8 last:border-0">
-              <div class="flex items-center gap-3 text-xs font-mono text-gray-400 mb-2">
+              <div class="flex items-center gap-3 text-xs font-mono text-gray-800 mb-2">
                     <time datetime={essay.data.date.toISOString()}>
                       {formatDate(essay.data.date)}
                     </time>
