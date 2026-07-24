@@ -2,9 +2,9 @@
 @plugin "@tailwindcss/typography";
 :root {
   /* Colors */
-  --primary: #faf8f3;
+  --primary: #f5e389;
   --primary-soft: #f3efe7;
-  --surface: #fffdf9;
+  --surface: #eddc85;
 
   --text: #182033;
   --text-soft: #667085;

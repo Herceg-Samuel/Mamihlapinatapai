@@ -46,7 +46,7 @@ const feed = [...essays, ...projects, ...notes].sort(
 
       <!-- The Feed -->
       <section class="max-w-3xl mx-auto px-6 py-12">
-        <h2 class="text-xs font-mono uppercase tracking-widest text-gray-400 mb-8 border-b border-gray-200 pb-4">
+        <h2 class="text-xs font-mono uppercase tracking-widest text-gray-800 mb-8 border-b border-gray-200 pb-4">
           Recent Thoughts & Builds
         </h2>
         
@@ -57,7 +57,7 @@ const feed = [...essays, ...projects, ...notes].sort(
               {/* === ESSAY RENDER LOGIC === */}
               {item.collection === 'essays' && (
                 <a href={`/essays/${item.id}`} class="block">
-                  <div class="flex items-center gap-3 text-xs font-mono text-gray-400 mb-2">
+                  <div class="flex items-center gap-3 text-xs font-mono text-gray-800 mb-2">
                     <time datetime={item.data.date.toISOString()}>
                       {formatDate(item.data.date)}
                     </time>
@@ -76,7 +76,7 @@ const feed = [...essays, ...projects, ...notes].sort(
               {/* === PROJECT RENDER LOGIC === */}
               {item.collection === 'projects' && (
                 <a href={`/projects/${item.id}`} class="block">
-                  <div class="flex items-center gap-3 text-xs font-mono text-gray-400 mb-2">
+                  <div class="flex items-center gap-3 text-xs font-mono text-gray-800 mb-2">
                     <time datetime={item.data.date.toISOString()}>
                       {formatDate(item.data.date)}
                     </time>
@@ -104,7 +104,7 @@ const feed = [...essays, ...projects, ...notes].sort(
                {/* === NOTE RENDER LOGIC === */}
               {item.collection === 'notes' && (
                 <a href={`/notes/${item.id}`} class="block">
-                  <div class="flex items-center gap-3 text-xs font-mono text-gray-400 mb-2">
+                  <div class="flex items-center gap-3 text-xs font-mono text-gray-800 mb-2">
                     <time datetime={item.data.date.toISOString()}>
                       {formatDate(item.data.date)}
                     </time>
