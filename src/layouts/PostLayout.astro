@@ -5,13 +5,18 @@ import '../styles/global.css';
 import '../components/narrative/styles.css'
 
 import type { CollectionEntry } from 'astro:content';
+import type { RelatedEntry } from '../lib/fns';
+import { formatDate } from '../lib/fns';
 
 type EssaysFrontmatter = CollectionEntry<'essays'>['data'];
 type ProjectsFrontmatter = CollectionEntry<'projects'>['data'];
 
 type PostFrontmatter = EssaysFrontmatter | ProjectsFrontmatter;
 
-const { frontmatter } = Astro.props as { frontmatter: PostFrontmatter };
+const { frontmatter, relatedEntries } = Astro.props as {
+  frontmatter: PostFrontmatter;
+  relatedEntries?: RelatedEntry[];
+};
 ---
 
 
@@ -43,6 +48,47 @@ const { frontmatter } = Astro.props as { frontmatter: PostFrontmatter };
 
       <!-- The MDX content gets injected here -->
       <slot />
+
+      <!-- Related Entries -->
+      {
+        relatedEntries && relatedEntries.length > 0 && (
+          <section class="not-prose mt-16 pt-12 border-t border-surface">
+            <h2 class="text-sm font-mono uppercase tracking-widest text-gray-800 mb-8">
+              Continue Reading
+            </h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              {relatedEntries.map((entry) => (
+                <a
+                  href={`/${entry.collection}/${entry.id}`}
+                  class="group block p-5 border border-gray-200 rounded-lg hover:border-blue-400 hover:shadow-sm transition-all"
+                >
+                  <div class="flex items-center gap-2 text-xs font-mono text-gray-500 mb-2">
+                    <time datetime={entry.data.date.toISOString()}>
+                      {formatDate(new Date(entry.data.date))}
+                    </time>
+                    {entry.data.topic && (
+                      <>
+                        <span>—</span>
+                        <span class="uppercase tracking-widest text-blue-500">
+                          {entry.data.topic}
+                        </span>
+                      </>
+                    )}
+                  </div>
+                  <h3 class="text-lg font-mono font-semibold group-hover:text-blue-600 transition-colors">
+                    {entry.data.title}
+                  </h3>
+                  {entry.data.description && (
+                    <p class="text-sm text-gray-600 mt-1 leading-relaxed line-clamp-2">
+                      {entry.data.description}
+                    </p>
+                  )}
+                </a>
+              ))}
+            </div>
+          </section>
+        )
+      }
     </main>
 
     <Footer />

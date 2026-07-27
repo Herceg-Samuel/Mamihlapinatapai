@@ -34,6 +34,8 @@ import Timeline from '@/components/narrative/Timeline.astro';
 import Title from '@/components/narrative/Title.astro';
 import Pause from '@/components/narrative/shared/Pause.astro';
 
+import { getRelatedEntries } from '../../lib/fns';
+import type { RelatedEntry } from '../../lib/fns';
 
 // Build all project pages
 export async function getStaticPaths() {
@@ -54,6 +56,25 @@ const { entry } = Astro.props;
 if (!entry) {
   return Astro.redirect('/404');
 }
+
+// Fetch all collections for related entries
+const allEssays = await getCollection('essays');
+const allNotes = await getCollection('notes');
+const allProjects = await getCollection('projects');
+
+const allEntries: RelatedEntry[] = [
+  ...allEssays.map((e) => ({ id: e.id, collection: 'essays', data: e.data })),
+  ...allNotes.map((e) => ({ id: e.id, collection: 'notes', data: e.data })),
+  ...allProjects.map((e) => ({ id: e.id, collection: 'projects', data: e.data })),
+];
+
+const currentEntry: RelatedEntry = {
+  id: entry.id,
+  collection: 'projects',
+  data: entry.data,
+};
+
+const relatedEntries = getRelatedEntries(currentEntry, allEntries, 2);
 
 const narrativeComponents = {
   Thought, 
@@ -87,7 +108,7 @@ const narrativeComponents = {
 const { Content } = await render(entry);
 ---
 
-<PostLayout frontmatter={entry.data}>
+<PostLayout frontmatter={entry.data} relatedEntries={relatedEntries}>
   <Content components={narrativeComponents}/>
 </PostLayout>
 
