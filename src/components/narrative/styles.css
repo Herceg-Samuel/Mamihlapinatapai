@@ -71,7 +71,7 @@
   background-size: 18px 18px;
 }
 .quote {
-  border-left: 2px solid var(--accent);
+  border-left: 2px solid var(--surface);
 
   padding-left: 1.5rem;
 }
