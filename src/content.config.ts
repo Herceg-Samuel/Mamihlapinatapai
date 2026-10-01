@@ -22,6 +22,7 @@ const essaysCollection = defineCollection({
       "heart",
       "kant",
       "Christ",
+      "spinoza",
     ]),
     date: z.date(),
     draft: z.boolean().default(false),
